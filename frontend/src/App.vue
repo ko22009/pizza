@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     <div id="nav">
+      <b-button v-b-tooltip.hover title="Tooltip directive content">
+        Hover Me
+      </b-button>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
