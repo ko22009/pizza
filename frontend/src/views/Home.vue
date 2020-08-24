@@ -8,7 +8,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import HelloWorld from '@/components/HelloWorld.vue'
-// import {Api} from "@/api";
+import { Api } from '@/api'
 
 @Component({
   components: {
@@ -17,8 +17,8 @@ import HelloWorld from '@/components/HelloWorld.vue'
 })
 export default class Home extends Vue {
   async mounted () {
-    // const api = new Api()
-    // await api.fetch('todos')
+    const api = new Api()
+    await api.fetch('todos')
   }
 }
 </script>
