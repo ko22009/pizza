@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --no-clean",
-    "start": "npm run-script build"
+    "build": "vue-cli-service build --no-clean"
   },
   "dependencies": {
     "@types/bootstrap": "^4.5.0",
