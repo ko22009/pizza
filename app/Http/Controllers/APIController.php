@@ -6,10 +6,10 @@ namespace App\Http\Controllers;
 
 /**
  * @OA\Info(
- *     title="Laravel + Passport + Vue example app",
+ *     title="Pizza API",
  *     version="1.0.0",
  *     @OA\Contact(
- *         email="alex.shabramov@gmail.com"
+ *         email="ko22009@yandex.ru"
  *     ),
  *     @OA\License(
  *         name="Apache 2.0",
@@ -26,8 +26,8 @@ namespace App\Http\Controllers;
  *     )
  * ),
  * @OA\Server(
- *     description="Lua Chat Open API server",
- *     url="http://127.0.0.1:8003/api"
+ *     description="Open API server",
+ *     url="/api"
  * )
  */
 class APIController extends Controller
