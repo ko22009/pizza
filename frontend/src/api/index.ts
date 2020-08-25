@@ -5,10 +5,10 @@ export class Api {
 
   protected instance = axios.create()
   protected baseUrl = process.env.VUE_APP_BASE_URL ?? '/'
-  protected token = localStorage.getItem('token')
+  protected token = ''
 
   constructor() {
-    this.setToken(localStorage.getItem('token'))
+    this.instance.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
     this.instance.interceptors.response.use((response) => {
       if (response.status === 401) {
         store.dispatch('logout')
@@ -22,15 +22,10 @@ export class Api {
     });
   }
 
-  setToken(token: string | null) {
-    if (!token) return
+  setHeader(token: string) {
+    this.token = token
     localStorage.setItem('token', token)
-    this.instance.defaults.headers.common['Authorization'] = token
-  }
-
-  removeToken() {
-    delete this.instance.defaults.headers.common['Authorization']
-    localStorage.removeItem('token')
+    this.instance.defaults.headers.common['Authorization'] = 'Bearer ' + token
   }
 
   async post<T = any>(url: string, data?: any, config?: AxiosRequestConfig) {
@@ -51,4 +46,5 @@ export class Api {
 
 }
 
-export default new Api
+const api = new Api
+export default api

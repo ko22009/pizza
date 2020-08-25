@@ -9,6 +9,9 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue)
 
+import { Plugin } from 'vue-fragment'
+Vue.use(Plugin)
+
 import './sass/app.scss'
 
 Vue.config.productionTip = false

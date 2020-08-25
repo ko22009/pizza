@@ -1,15 +1,28 @@
 <template>
-  <div>
-    <form class="login" @submit.prevent="login">
-      <h1>Sign in</h1>
-      <label for="email">Email</label>
-      <input id="email" required v-model="email" type="email" placeholder="Name"/>
-      <label for="password">Password</label>
-      <input id="password" required v-model="password" type="password" placeholder="Password"/>
-      <hr/>
-      <button type="submit">Login</button>
-    </form>
-  </div>
+  <b-form @submit.prevent="login">
+
+    <b-form-group
+      :state="state('login')"
+      :invalid-feedback="error('login')"
+    >
+      <b-form-input
+        v-model="form.login"
+        placeholder="Enter login"
+      ></b-form-input>
+    </b-form-group>
+
+    <b-form-group
+      :state="state('password')"
+      :invalid-feedback="error('password')"
+    >
+      <b-form-input
+        v-model="form.password"
+        placeholder="Enter password"
+      ></b-form-input>
+    </b-form-group>
+    <b-form-invalid-feedback class="mb-2" :force-show="!!commonError">{{ commonError }}</b-form-invalid-feedback>
+    <b-button type="submit" variant="primary">Login</b-button>
+  </b-form>
 </template>
 
 <script lang="ts">
@@ -18,15 +31,32 @@
 
   @Component
   export default class Login extends Vue {
-    email: any;
-    password: any;
+    form = {
+      login: '',
+      password: ''
+    }
 
-    login () {
-      let email = this.email
-      let password = this.password
-      this.$store.dispatch('login', { email, password })
+    commonError = ''
+    errors: { [key: string]: Array<string> } = {}
+
+    state(field: string) {
+      return this.errors && !(field in this.errors)
+    }
+
+    error(field: string) {
+      if (this.errors && field in this.errors) {
+        return this.errors[field].join(', ')
+      }
+      return ''
+    }
+
+    login() {
+      this.$store.dispatch('login', this.form)
         .then(() => this.$router.push('/'))
-        .catch(err => console.log(err))
+        .catch(err => {
+          this.errors = err.errors
+          this.commonError = err.error
+        })
     }
 
   }

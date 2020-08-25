@@ -5,20 +5,18 @@ import api from '@/api'
 Vue.use(Vuex)
 
 export interface RootState {
-  token: string
+  token: string | null
   status: string
-  user: object
 }
 
 export default new Store<RootState>({
   state: {
-    token: '',
+    token: localStorage.getItem('token'),
     status: '',
-    user: {}
   },
   getters: {
     isLoggedIn: state => !!state.token,
-    authStatus: state => state.status,
+    authStatus: state => state.status
   },
   mutations: {
     authRequest(state) {
@@ -26,61 +24,77 @@ export default new Store<RootState>({
     },
     authSuccess(state, payload) {
       state.status = 'success'
-      state.token = payload.token
-      state.user = payload.user
+      state.token = payload
+      api.setHeader(payload)
     },
     authError(state) {
       state.status = 'error'
+      state.token = ''
     },
     logout(state) {
       state.status = ''
       state.token = ''
+      api.setHeader('')
     },
   },
   actions: {
     register({commit}, user) {
       return new Promise((resolve, reject) => {
-        commit('auth_request')
-        api.post('register', user)
+        commit('authRequest')
+        api.post('users/register', user)
           .then(resp => {
             const token = resp.data.token
-            const user = resp.data.user
-            api.setToken(token)
-            commit('auth_success', token, user)
+            commit('authSuccess', token)
             resolve(resp)
           })
           .catch(err => {
-            commit('auth_error', err)
-            api.removeToken()
+            commit('authError', err)
             reject(err)
           })
       })
     },
     login({commit}, user) {
       return new Promise((resolve, reject) => {
-        commit('auth_request')
-        api.post('login', user)
+        commit('authRequest')
+        api.post('users/login', user)
           .then(resp => {
             const token = resp.data.token
-            const user = resp.data.user
-            api.setToken(token)
-            commit('auth_success', token, user)
+            commit('authSuccess', token)
             resolve(resp)
           })
           .catch(err => {
-            commit('auth_error')
-            api.removeToken()
+            commit('authError', err)
             reject(err)
           })
       })
     },
     logout({commit}) {
       return new Promise((resolve, reject) => {
-        commit('logout')
-        api.removeToken()
-        resolve()
+        api.get('users/logout')
+          .then(({data}) => {
+            commit('logout')
+            resolve(data)
+          })
+          .catch(err => {
+            commit('authError', err)
+            reject(err)
+          })
       })
-    }
+    },
+    checkAuth({commit}) {
+      if (localStorage.getItem('token')) {
+        return new Promise((resolve) => {
+          api.get('token/validate')
+            .then(resp => {
+              resolve(resp)
+            })
+            .catch(err => {
+              commit('logout')
+              resolve(err)
+            })
+        })
+      }
+    },
   },
   modules: {}
 })

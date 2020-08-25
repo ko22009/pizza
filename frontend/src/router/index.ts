@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Login from "@/components/Login.vue";
 import Register from '@/components/Register.vue';
 import Profile from "@/components/Profile.vue";
+import PageNotFound from "@/components/PageNotFound.vue";
 import store from '@/store';
 import {RouterOptions} from "vue-router/types/router";
 
@@ -11,26 +12,43 @@ const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      title: 'Pizza Hot'
+    }
   },
   {
     path: '/login',
     name: 'login',
-    component: Login
+    component: Login,
+    meta: {
+      title: 'Login page'
+    }
   },
   {
     path: '/register',
     name: 'register',
-    component: Register
+    component: Register,
+    meta: {
+      title: 'Register page'
+    }
   },
   {
     path: '/profile',
     name: 'profile',
     component: Profile,
     meta: {
+      title: 'Profile page',
       requiresAuth: true
     }
   },
+  {
+    path: "*",
+    component: PageNotFound,
+    meta: {
+      title: 'Not found'
+    }
+  }
 ]
 
 export class VueRouter extends Router {
@@ -39,15 +57,15 @@ export class VueRouter extends Router {
     super(options)
   }
 
-  goPage(url: string) {
-    if (router.currentRoute.fullPath != url) router.push(url)
-    else {
-      this.app.$bvToast.toast('Toast body content', {
-        title: 'Sda',
-        variant: 'warning',
+  goPage(url: string, denied: boolean = false) {
+    if (denied) {
+      this.app.$nextTick(() => this.app.$bvToast.toast('You are not auth', {
+        title: 'Redirect to auth',
+        variant: 'dark',
         solid: true
-      })
+      }))
     }
+    if (router.currentRoute.fullPath != url) router.push(url)
   }
 }
 
@@ -60,15 +78,19 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.isLoggedIn) {
+  document.title = to.meta.title
+  Promise.all([store.dispatch('checkAuth')]).then(() => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+      console.log(store.getters.isLoggedIn)
+      if (store.getters.isLoggedIn) {
+        next()
+        return
+      }
+      router.goPage('/login', true)
+    } else {
       next()
-      return
     }
-    router.goPage('/login')
-  } else {
-    next()
-  }
+  })
 })
 
 export default router

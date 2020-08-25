@@ -1,27 +1,73 @@
 <template>
-  <div>
-    <h4>Register</h4>
-    <form @submit.prevent="register">
-      <label for="name">Name</label>
-      <div>
-        <input id="name" type="text" v-model="name" required autofocus>
-      </div>
+  <b-form @submit.prevent="register">
 
-      <label for="email">E-Mail Address</label>
-      <div>
-        <input id="email" type="email" v-model="email" required>
-      </div>
+    <b-form-group
+      label="Login:" label-for="input-1"
+      :state="state('login')"
+      :invalid-feedback="error('login')"
+    >
+      <b-form-input
+        id="input-1"
+        v-model="form.login"
+        placeholder="Enter login"
+      ></b-form-input>
+    </b-form-group>
 
-      <label for="password">Password</label>
-      <div>
-        <input id="password" type="password" v-model="password" required>
-      </div>
+    <b-form-group
+      label="Email address:"
+      label-for="input-2"
+      description="We'll never share your email with anyone else."
+      :state="state('email')"
+      :invalid-feedback="error('email')"
+    >
+      <b-form-input
+        id="input-2"
+        v-model="form.email"
+        placeholder="Enter email"
+      ></b-form-input>
+    </b-form-group>
 
-      <div>
-        <button type="submit">Register</button>
-      </div>
-    </form>
-  </div>
+    <b-form-group
+      label="Your Name:"
+      label-for="input-3"
+      :state="state('name')"
+      :invalid-feedback="error('name')"
+    >
+      <b-form-input
+        id="input-3"
+        v-model="form.name"
+        placeholder="Enter name"
+      ></b-form-input>
+    </b-form-group>
+
+    <b-form-group
+      label="Password:"
+      label-for="input-4"
+      :state="state('password')"
+      :invalid-feedback="error('password')"
+    >
+      <b-form-input
+        id="input-4"
+        v-model="form.password"
+        placeholder="Enter password"
+      ></b-form-input>
+    </b-form-group>
+
+    <b-form-group
+      label="Password confirmation:"
+      label-for="input-5"
+      :state="state('password_confirmation')"
+      :invalid-feedback="error('password_confirmation')"
+    >
+      <b-form-input
+        id="input-5"
+        v-model="form.password_confirmation"
+        placeholder="Enter password again"
+      ></b-form-input>
+    </b-form-group>
+    <b-form-invalid-feedback class="mb-2" :force-show="!!commonError">{{ commonError }}</b-form-invalid-feedback>
+    <b-button type="submit" variant="primary">Register</b-button>
+  </b-form>
 </template>
 
 <script lang="ts">
@@ -30,19 +76,35 @@
 
   @Component
   export default class Register extends Vue {
-    email: any;
-    password: any;
-    name: any;
+    form = {
+      name: '',
+      login: '',
+      email: '',
+      password: '',
+      password_confirmation: ''
+    }
+
+    commonError = ''
+    errors: { [key: string]: Array<string> } = {}
+
+    state(field: string) {
+      return !(field in this.errors)
+    }
+
+    error(field: string) {
+      if (field in this.errors) {
+        return this.errors[field].join(', ')
+      }
+      return ''
+    }
 
     register() {
-      let data = {
-        name: this.name,
-        email: this.email,
-        password: this.password,
-      }
-      this.$store.dispatch('register', data)
+      this.$store.dispatch('register', this.form)
         .then(() => this.$router.push('/'))
-        .catch(err => console.log(err))
+        .catch(err => {
+          this.errors = err.errors
+          this.commonError = err.error
+        })
     }
 
   }

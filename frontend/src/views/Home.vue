@@ -1,23 +1,13 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="/assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <div>
+    asdasd
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import HelloWorld from '@/components/HelloWorld.vue'
-import api from '@/api'
 
-@Component({
-  components: {
-    HelloWorld
-  }
-})
+@Component
 export default class Home extends Vue {
-  async mounted () {
-    //await api.get('todos')
-  }
 }
 </script>

@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class RegistrationRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -24,10 +25,11 @@ class RegistrationRequest extends FormRequest
     public function rules()
     {
         return [
-            'login' => 'required|between:3,60|unique:users,login',
-            'email' => 'required|email|unique:users,email',
-            'name' =>  'required|between:3,60',
-            'password' => 'required|between:8,36|confirmed'
+            'login'                 => 'required|between:3,60|unique:users,login',
+            'email'                 => 'required|email|unique:users,email',
+            'name'                  => 'required|between:3,60',
+            'password'              => 'required|between:8,36|confirmed',
         ];
     }
+
 }
