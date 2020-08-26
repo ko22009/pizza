@@ -6,8 +6,9 @@ import store from './store'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-import BootstrapVue from 'bootstrap-vue'
+import {BootstrapVue, BootstrapVueIcons} from 'bootstrap-vue'
 Vue.use(BootstrapVue)
+Vue.use(BootstrapVueIcons)
 
 import { Plugin } from 'vue-fragment'
 Vue.use(Plugin)
