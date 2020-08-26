@@ -1,8 +1,8 @@
 <template>
   <b-navbar toggleable="lg" type="light" class="mb-3 pl-0 pr-0">
 
-    <b-navbar-brand href="/" @click.prevent="$router.goPage('/')">
-      <b-navbar-brand class="text-danger" href="#">
+    <b-navbar-brand class="cursor-pointer" @click.prevent="$router.goPage('/')">
+      <b-navbar-brand class="text-danger">
         <img src="/assets/pizza.png" class="d-inline-block align-top" style="width: 30px" alt="Pizza Hot">
         Pizza Hot
       </b-navbar-brand>
@@ -11,16 +11,32 @@
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>
-      <b-navbar-nav class="ml-auto">
+      <b-navbar-nav class="ml-auto align-items-center">
+
+        <b-badge @click.prevent="changeCurrency" variant="dark" class="cursor-pointer">{{currency}}</b-badge>
+
+        <li class="nav-item">
+          <span class="nav-link cursor-pointer" @click.prevent="$router.goPage('/shop')">
+            <b-avatar id="shop" :badge="count" variant="none" badge-variant="warning" icon="cart"></b-avatar>
+          </span>
+        </li>
 
         <fragment v-if="!isLoggedIn">
-          <b-nav-item @click="$router.goPage('/login')">Login</b-nav-item>
-          <b-nav-item @click="$router.goPage('/register')">Register</b-nav-item>
+          <li class="nav-item">
+            <span class="nav-link cursor-pointer" @click="$router.goPage('/login')">Login</span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-link cursor-pointer" @click="$router.goPage('/register')">Register</span>
+          </li>
         </fragment>
 
         <fragment v-else>
-          <b-nav-item @click="$router.goPage('/profile')">Profile</b-nav-item>
-          <b-nav-item @click.prevent="logout">Log Out</b-nav-item>
+          <li class="nav-item">
+            <span class="nav-link cursor-pointer" @click="$router.goPage('/profile')">Profile</span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-link cursor-pointer" @click="logout">Log Out</span>
+          </li>
         </fragment>
 
       </b-navbar-nav>
@@ -33,12 +49,25 @@
 
   @Component
   export default class TopNav extends Vue {
+
+    get count() {
+      return '' + this.$store.getters['shop/count']
+    }
+
+    changeCurrency() {
+      this.$store.commit('shop/changeCurrency')
+    }
+
+    get currency() {
+      return this.$store.getters['shop/currency']
+    }
+
     get isLoggedIn() {
-      return this.$store.getters.isLoggedIn
+      return this.$store.getters['auth/isLoggedIn']
     }
 
     logout() {
-      this.$store.dispatch('logout')
+      this.$store.dispatch('auth/logout')
         .then(() => {
           this.$router.push('/')
         })

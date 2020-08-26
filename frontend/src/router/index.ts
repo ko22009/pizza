@@ -1,12 +1,15 @@
 import Vue from 'vue'
-import Router, {RouteConfig} from 'vue-router'
-import Home from '../views/Home.vue'
+import Router, {Route, RouteConfig} from 'vue-router'
+import Home from '@/views/Home.vue'
 import Login from "@/components/Login.vue";
 import Register from '@/components/Register.vue';
-import Profile from "@/components/Profile.vue";
+import Profile from "@/views/Profile.vue";
 import PageNotFound from "@/components/PageNotFound.vue";
 import store from '@/store';
 import {RouterOptions} from "vue-router/types/router";
+import Shop from "@/views/Shop.vue";
+
+const title = 'Pizza Hot'
 
 const routes: Array<RouteConfig> = [
   {
@@ -14,7 +17,7 @@ const routes: Array<RouteConfig> = [
     name: 'Home',
     component: Home,
     meta: {
-      title: 'Pizza Hot'
+      title: title
     }
   },
   {
@@ -22,7 +25,8 @@ const routes: Array<RouteConfig> = [
     name: 'login',
     component: Login,
     meta: {
-      title: 'Login page'
+      title: title + ': Login page',
+      forceAfterAuth: true
     }
   },
   {
@@ -30,7 +34,16 @@ const routes: Array<RouteConfig> = [
     name: 'register',
     component: Register,
     meta: {
-      title: 'Register page'
+      title: title + ': Register page',
+      forceAfterAuth: true
+    }
+  },
+  {
+    path: '/shop',
+    name: 'shop',
+    component: Shop,
+    meta: {
+      title: title + ': Cart',
     }
   },
   {
@@ -38,7 +51,7 @@ const routes: Array<RouteConfig> = [
     name: 'profile',
     component: Profile,
     meta: {
-      title: 'Profile page',
+      title: title + ': Profile page',
       requiresAuth: true
     }
   },
@@ -46,7 +59,7 @@ const routes: Array<RouteConfig> = [
     path: "*",
     component: PageNotFound,
     meta: {
-      title: 'Not found'
+      title: title + ': Not found'
     }
   }
 ]
@@ -57,15 +70,20 @@ export class VueRouter extends Router {
     super(options)
   }
 
-  goPage(url: string, denied: boolean = false) {
+  goPage(url: string, denied: boolean = false, to: Route | null = null, from: Route | null = null, title: string = '', message: string = '') {
     if (denied) {
-      this.app.$nextTick(() => this.app.$bvToast.toast('You are not auth', {
-        title: 'Redirect to auth',
+      this.app.$nextTick(() => this.app.$bvToast.toast(message, {
+        title: title,
         variant: 'dark',
         solid: true
       }))
+      store.commit('loading/setLoading', false)
     }
-    if (router.currentRoute.fullPath != url) router.push(url)
+    router.push(url).catch(error => {
+      if (error.name != "NavigationDuplicated") {
+        throw error
+      }
+    })
   }
 }
 
@@ -77,16 +95,41 @@ const router = new VueRouter({
   routes
 })
 
+function preLogin(to: Route) {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    return store.getters['auth/isLoggedIn']
+  }
+  return true
+}
+
+function preForceAfterAuth(to: Route) {
+  if (to.matched.some(record => record.meta.forceAfterAuth)) {
+    return !store.getters['auth/isLoggedIn']
+  }
+  return true
+}
+
+function preShop(to: Route) {
+  const count = store.getters['shop/count']
+  return !to.matched.some(record => record.path == '/shop') || count
+}
+
+router.afterEach((to, from) => {
+  Vue.nextTick(() => {
+    store.commit('loading/setLoading', false)
+    document.title = to.meta.title ? to.meta.title : title
+  })
+})
+
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title
-  Promise.all([store.dispatch('checkAuth')]).then(() => {
-    if (to.matched.some(record => record.meta.requiresAuth)) {
-      console.log(store.getters.isLoggedIn)
-      if (store.getters.isLoggedIn) {
-        next()
-        return
-      }
-      router.goPage('/login', true)
+  store.commit('loading/setLoading', true)
+  Promise.all([store.dispatch('auth/checkAuth')]).then(() => {
+    if (!preLogin(to)) {
+      router.goPage('/login', true, to, from, 'Redirect to auth', 'You are not auth')
+    } else if (!preForceAfterAuth(to)) {
+      router.goPage('/', true, to, from, 'Redirect to main page', 'You are auth')
+    } else if (!preShop(to)) {
+      router.goPage('/', true, to, from, 'Redirect to main page', 'You don\'t have product in cart')
     } else {
       next()
     }

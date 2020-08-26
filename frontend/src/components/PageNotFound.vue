@@ -2,7 +2,7 @@
   <div>
     <b-jumbotron header="404 Not Found" lead="Oops!">
       <p>Sorry, an error has occured, Requested page not found!</p>
-      <b-button variant="primary" href="#" @click.prevent="$router.goPage('/')">Go to main page</b-button>
+      <b-button variant="primary" @click.prevent="$router.goPage('/')">Go to main page</b-button>
     </b-jumbotron>
   </div>
 </template>
