@@ -30,7 +30,7 @@ class LoginRequest extends FormRequest
             ],
             'password' => [
                 'required',
-                'between:8,36',
+                'between:4,36',
             ]
         ];
     }

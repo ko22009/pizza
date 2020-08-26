@@ -28,7 +28,7 @@ class RegistrationRequest extends FormRequest
             'login'                 => 'required|between:3,60|unique:users,login',
             'email'                 => 'required|email|unique:users,email',
             'name'                  => 'required|between:3,60',
-            'password'              => 'required|between:8,36|confirmed',
+            'password'              => 'required|between:4,36|confirmed',
         ];
     }
 

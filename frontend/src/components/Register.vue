@@ -48,6 +48,7 @@
     >
       <b-form-input
         id="input-4"
+        type="password"
         v-model="form.password"
         placeholder="Enter password"
       ></b-form-input>
@@ -61,6 +62,7 @@
     >
       <b-form-input
         id="input-5"
+        type="password"
         v-model="form.password_confirmation"
         placeholder="Enter password again"
       ></b-form-input>
@@ -99,7 +101,7 @@
     }
 
     register() {
-      this.$store.dispatch('register', this.form)
+      this.$store.dispatch('auth/register', this.form)
         .then(() => this.$router.push('/'))
         .catch(err => {
           this.errors = err.errors

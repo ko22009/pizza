@@ -16,6 +16,7 @@
       :invalid-feedback="error('password')"
     >
       <b-form-input
+        type="password"
         v-model="form.password"
         placeholder="Enter password"
       ></b-form-input>
@@ -51,7 +52,7 @@
     }
 
     login() {
-      this.$store.dispatch('login', this.form)
+      this.$store.dispatch('auth/login', this.form)
         .then(() => this.$router.push('/'))
         .catch(err => {
           this.errors = err.errors
