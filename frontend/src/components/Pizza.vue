@@ -14,13 +14,12 @@
       <span>{{ item.weight }} gr.</span>
       <span>{{ price }}</span>
     </b-card-text>
-    <quantity :count="count" @input="e => count = e">
-      <template v-slot:right>
-        <b-avatar ref="floatCart" size="35" :badge="`+` + count" class="buy" badge-variant="warning"
-                  icon="cart"></b-avatar>
-        <b-button :disabled="process" @click="buy(item.id, $event)" href="#" variant="danger">Buy</b-button>
-      </template>
-    </quantity>
+    <div style="display: flex; justify-content: space-between;">
+      <quantity :count="count" @input="e => count = e" />
+      <b-avatar ref="floatCart" size="35" :badge="`+` + count" class="buy" badge-variant="warning"
+                icon="cart"></b-avatar>
+      <b-button :disabled="process" @click="buy(item.id, $event)" href="#" variant="danger">Buy</b-button>
+    </div>
   </b-card>
 </template>
 
@@ -45,7 +44,7 @@
     get price() {
       const currency = this.$store.getters['shop/currency']
       const price = currency == euro ? this.item.price_euro : this.item.price_dollar
-      return price + ' ' + this.$store.getters['shop/currency']
+      return Number((this.count * price).toFixed(2)) + ' ' + this.$store.getters['shop/currency']
     }
 
     buy(id: number, event: MouseEvent) {

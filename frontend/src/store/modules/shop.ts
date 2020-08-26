@@ -5,13 +5,13 @@ import {Vue} from "vue-property-decorator";
 export const euro = '€'
 export const dollar = '$'
 
-interface order {
+export interface Order {
   id: number,
   count: number
 }
 
 export interface ShopState {
-  order: Array<order>,
+  order: Array<Order>,
   currency: string
 }
 
@@ -24,8 +24,8 @@ export default <Module<ShopState, RootState>>{
     order: state => state.order,
     count: state => state.order
       .reduce(
-        (a: order, b: order) => ({count: a.count + b.count} as order),
-        {count: 0} as order
+        (a: Order, b: Order) => ({count: a.count + b.count} as Order),
+        {count: 0} as Order
       ).count,
     currency: state => state.currency
   },
@@ -41,8 +41,8 @@ export default <Module<ShopState, RootState>>{
         Vue.set(state.order[index], 'count', state.order[index].count + count)
       }
     },
-    remove(id) {
-
+    remove(state, id) {
+      Vue.set(state, 'order', state.order.filter(item => item.id != id))
     },
     clear(state) {
       Vue.set(state, 'order', []);

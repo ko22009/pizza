@@ -1,6 +1,6 @@
 <template>
   <div class="quantity">
-    <b-input-group>
+    <b-input-group style="width: auto">
       <b-input-group-prepend>
         <b-btn variant="warning" @click="decrement()">-</b-btn>
       </b-input-group-prepend>
@@ -13,7 +13,6 @@
         <b-btn variant="warning" @click="increment()">+</b-btn>
       </b-input-group-append>
     </b-input-group>
-    <slot name="right"></slot>
   </div>
 
 </template>
@@ -39,7 +38,7 @@
 
 <style scoped>
   .quantity {
-    display: flex;
+    display: inline-flex;
   }
   .input-group-text {
     border-radius: unset;
