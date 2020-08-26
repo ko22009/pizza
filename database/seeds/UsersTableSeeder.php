@@ -14,16 +14,10 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'login' => 'laravel',
-            'name' => 'name',
-            'email' => 'laravel@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
-        DB::table('users')->insert([
-            'login' => 'laravelos',
-            'name' => 'name',
-            'email' => 'laravelos@gmail.com',
-            'password' => Hash::make('laravelos'),
+            'login' => 'user',
+            'name' => 'user',
+            'email' => 'user@gmail.com',
+            'password' => Hash::make('user'),
         ]);
     }
 }

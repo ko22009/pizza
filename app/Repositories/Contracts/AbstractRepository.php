@@ -88,4 +88,15 @@ namespace App\Repositories\Contracts;
 
          return null;
      }
+
+     public function get()
+     {
+         $result = $this->model
+             ->get();
+
+         if($result)
+             return $result;
+
+         return null;
+     }
  }
