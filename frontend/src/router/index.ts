@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router, {Route, RouteConfig} from 'vue-router'
 import Home from '@/views/Home.vue'
-import Login from "@/components/Login.vue";
-import Register from '@/components/Register.vue';
+import Login from "@/views/Login.vue";
+import Register from '@/views/Register.vue';
 import Profile from "@/views/Profile.vue";
-import PageNotFound from "@/components/PageNotFound.vue";
+import PageNotFound from "@/views/PageNotFound.vue";
 import store from '@/store';
 import {RouterOptions} from "vue-router/types/router";
 import Shop from "@/views/Shop.vue";
