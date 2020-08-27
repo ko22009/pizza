@@ -1,13 +1,16 @@
 import Vue from 'vue'
-import Router, {Route, RouteConfig} from 'vue-router'
+import Router, {RouteConfig} from 'vue-router'
 import Home from '@/views/Home.vue'
-import Login from "@/views/Login.vue";
-import Register from '@/views/Register.vue';
-import Profile from "@/views/Profile.vue";
-import PageNotFound from "@/views/PageNotFound.vue";
-import store from '@/store';
-import {RouterOptions} from "vue-router/types/router";
-import Shop from "@/views/Shop.vue";
+import Login from "@/views/Login.vue"
+import Register from '@/views/Register.vue'
+import Profile from "@/views/Profile.vue"
+import PageNotFound from "@/views/PageNotFound.vue"
+import store from '@/store'
+import Shop from "@/views/Shop.vue"
+import AfterAuthHandler from "@/router/handlers/afterAuthHandler"
+import BeforeAuthHandler from "@/router/handlers/beforeAuthHandler"
+import EndHandler from "@/router/handlers/endHandler"
+import BeforeShopHandler from "@/router/handlers/beforeShopHandler"
 
 const title = 'Pizza Hot'
 
@@ -64,74 +67,42 @@ const routes: Array<RouteConfig> = [
   }
 ]
 
-export class VueRouter extends Router {
+Vue.use(Router)
 
-  constructor(options?: RouterOptions) {
-    super(options)
-  }
-
-  goPage(url: string, denied: boolean = false, to: Route | null = null, from: Route | null = null, title: string = '', message: string = '') {
-    if (denied) {
-      this.app.$nextTick(() => this.app.$bvToast.toast(message, {
-        title: title,
-        variant: 'dark',
-        solid: true
-      }))
-      store.commit('loading/setLoading', false)
-    }
-    router.push(url).catch(error => {
-      if (error.name != "NavigationDuplicated") {
-        throw error
-      }
-    })
-  }
-}
-
-Vue.use(VueRouter)
-
-const router = new VueRouter({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
 })
 
-function preLogin(to: Route) {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    return store.getters['auth/isLoggedIn']
-  }
-  return true
-}
-
-function preForceAfterAuth(to: Route) {
-  if (to.matched.some(record => record.meta.forceAfterAuth)) {
-    return !store.getters['auth/isLoggedIn']
-  }
-  return true
-}
-
-function preShop(to: Route) {
-  const count = store.getters['shop/count']
-  return !to.matched.some(record => record.path == '/shop') || count
-}
-
 router.afterEach((to, from) => {
-  Vue.nextTick(() => {
+  router.app.$nextTick(() => {
     store.commit('loading/setLoading', false)
     document.title = to.meta.title ? to.meta.title : title
   })
 })
 
+function toaster(url: string, message: string, title: string) {
+  router.app.$nextTick(() => router.app.$bvToast.toast(message, {
+    title: title,
+    variant: 'dark',
+    solid: true
+  }))
+  router.push(url).catch()
+}
+
 router.beforeEach((to, from, next) => {
   store.commit('loading/setLoading', true)
-  if (!preLogin(to)) {
-    router.goPage('/login', true, to, from, 'Redirect to auth', 'You are not auth')
-  } else if (!preForceAfterAuth(to)) {
-    router.goPage('/', true, to, from, 'Redirect to main page', 'You are auth')
-  } else if (!preShop(to)) {
-    router.goPage('/', true, to, from, 'Redirect to main page', 'You don\'t have product in cart')
-  } else {
-    next()
-  }
+  const beforeAuthHandler = new BeforeAuthHandler(() => toaster('/login', 'Redirect to auth', 'You are not auth'))
+  const afterAuthHandler = new AfterAuthHandler(() => toaster('/', 'Redirect to main page', 'You are auth'))
+  const beforeShopHandler = new BeforeShopHandler(() => toaster('/', 'Redirect to main page', 'You don\'t have product in cart'))
+  const endHandler = new EndHandler(next)
+
+  beforeAuthHandler.setNext(afterAuthHandler)
+  afterAuthHandler.setNext(beforeShopHandler)
+  beforeShopHandler.setNext(endHandler)
+
+  beforeAuthHandler.next(to)
 })
 
 export default router

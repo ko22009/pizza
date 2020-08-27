@@ -53,7 +53,7 @@
 
     login() {
       this.$store.dispatch('auth/login', this.form)
-        .then(() => this.$router.push('/'))
+        .then(() => this.$router.push('/').catch())
         .catch(err => {
           this.errors = err.errors
           this.commonError = err.error

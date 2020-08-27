@@ -102,7 +102,7 @@
 
     register() {
       this.$store.dispatch('auth/register', this.form)
-        .then(() => this.$router.push('/'))
+        .then(() => this.$router.push('/').catch())
         .catch(err => {
           this.errors = err.errors
           this.commonError = err.error

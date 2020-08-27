@@ -4,12 +4,14 @@
 
       <b-navbar toggleable="lg" type="light" class="pl-0 pr-0">
 
-        <b-navbar-brand class="cursor-pointer" @click.prevent="$router.goPage('/')">
-          <b-navbar-brand class="text-danger">
-            <img src="/assets/pizza.png" class="d-inline-block align-top" style="width: 30px" alt="Pizza Hot">
-            Pizza Hot
+        <router-link to="/">
+          <b-navbar-brand>
+            <b-navbar-brand class="text-danger">
+              <img src="/assets/pizza.png" class="d-inline-block align-top" style="width: 30px" alt="Pizza Hot">
+              Pizza Hot
+            </b-navbar-brand>
           </b-navbar-brand>
-        </b-navbar-brand>
+        </router-link>
 
         <b-navbar-nav class="ml-auto align-items-center">
           <li class="nav-item">
