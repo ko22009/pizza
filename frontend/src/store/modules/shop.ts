@@ -41,6 +41,12 @@ export default <Module<ShopState, RootState>>{
         Vue.set(state.order[index], 'count', state.order[index].count + count)
       }
     },
+    updateCount(state, {id, count}) {
+      const index = state.order.findIndex(item => item.id == id)
+      if(index != -1) {
+        Vue.set(state.order[index], 'count', count)
+      }
+    },
     remove(state, id) {
       Vue.set(state, 'order', state.order.filter(item => item.id != id))
     },

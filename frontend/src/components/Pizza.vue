@@ -16,7 +16,7 @@
     </b-card-text>
     <div style="display: flex; justify-content: space-between;">
       <quantity :count="count" @input="e => count = e" />
-      <b-avatar ref="floatCart" size="35" :badge="`+` + count" class="buy" badge-variant="warning"
+      <b-avatar variant="dark" ref="floatCart" size="35" :badge="`+` + count" class="buy" badge-variant="warning"
                 icon="cart"></b-avatar>
       <b-button :disabled="process" @click="buy(item.id, $event)" href="#" variant="danger">Buy</b-button>
     </div>

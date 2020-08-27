@@ -9,7 +9,7 @@
 
     <div class="d-flex">
       <span class="h3 font-weight-light price">{{price}}</span>
-      <quantity :count="item.count"/>
+      <quantity @input="input" :count="item.count"/>
       <b-button @click="remove(item.id)" class="ml-3" variant="outline-dark">
         <b-icon icon="dash-square"></b-icon>
       </b-button>
@@ -31,6 +31,15 @@
   })
   export default class PizzaCart extends Vue {
     @Prop() item!: Order
+
+    input(count: number) {
+      const id = this.item.id
+      const data = {
+        id: id,
+        count: count
+      }
+      this.$store.commit('shop/updateCount', data)
+    }
 
     get pizza() {
       const pizza = this.$store.getters['pizza/pizza']
