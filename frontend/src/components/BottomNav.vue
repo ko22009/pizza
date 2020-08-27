@@ -13,7 +13,7 @@
 
         <b-navbar-nav class="ml-auto align-items-center">
           <li class="nav-item">
-            <span class="font-weight-normal">Pizza Hot. Service Delivery pizza</span>
+            <span class="font-weight-normal">Pizza Hot. Service Delivery Pizza</span>
           </li>
         </b-navbar-nav>
 
