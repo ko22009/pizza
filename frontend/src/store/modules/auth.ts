@@ -37,47 +37,33 @@ export default <Module<Auth, RootState>>{
   },
   actions: {
     register({commit}, user) {
-      return new Promise((resolve, reject) => {
-        commit('authRequest')
-        api.post('users/register', user)
-          .then(resp => {
-            const token = resp.data.token
-            commit('authSuccess', token)
-            resolve(resp)
-          })
-          .catch(err => {
-            commit('authError', err)
-            reject(err)
-          })
-      })
+      commit('authRequest')
+      return api.post('users/register', user)
+        .then(resp => {
+          commit('authSuccess', resp.data.token)
+        })
+        .catch(err => {
+          commit('authError', err)
+        })
     },
     login({commit}, user) {
-      return new Promise((resolve, reject) => {
-        commit('authRequest')
-        api.post('users/login', user)
-          .then(resp => {
-            const token = resp.data.token
-            commit('authSuccess', token)
-            resolve(resp)
-          })
-          .catch(err => {
-            commit('authError', err)
-            reject(err)
-          })
-      })
+      commit('authRequest')
+      api.post('users/login', user)
+        .then(resp => {
+          commit('authSuccess', resp.data.token)
+        })
+        .catch(err => {
+          commit('authError', err)
+        })
     },
     logout({commit}) {
-      return new Promise((resolve, reject) => {
-        api.get('users/logout')
-          .then(({data}) => {
-            commit('logout')
-            resolve(data)
-          })
-          .catch(err => {
-            commit('authError', err)
-            reject(err)
-          })
-      })
+      api.get('users/logout')
+        .then(({data}) => {
+          commit('logout')
+        })
+        .catch(err => {
+          commit('authError', err)
+        })
     },
   }
 }
