@@ -79,19 +79,5 @@ export default <Module<Auth, RootState>>{
           })
       })
     },
-    checkAuth({commit}) {
-      if (localStorage.getItem('token')) {
-        return new Promise((resolve) => {
-          api.get('token/validate')
-            .then(resp => {
-              resolve(resp)
-            })
-            .catch(err => {
-              commit('logout')
-              resolve(err)
-            })
-        })
-      }
-    },
   }
 }

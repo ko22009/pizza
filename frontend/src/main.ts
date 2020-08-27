@@ -17,8 +17,15 @@ import './sass/app.scss'
 
 Vue.config.productionTip = false
 
-new Vue({
+const root = new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#app')
+})
+
+if (process.env.NODE_ENV === 'development')
+  Object.assign(window, {root})
+
+root.$mount('#app')
+
+export default root

@@ -123,17 +123,15 @@ router.afterEach((to, from) => {
 
 router.beforeEach((to, from, next) => {
   store.commit('loading/setLoading', true)
-  Promise.all([store.dispatch('auth/checkAuth')]).then(() => {
-    if (!preLogin(to)) {
-      router.goPage('/login', true, to, from, 'Redirect to auth', 'You are not auth')
-    } else if (!preForceAfterAuth(to)) {
-      router.goPage('/', true, to, from, 'Redirect to main page', 'You are auth')
-    } else if (!preShop(to)) {
-      router.goPage('/', true, to, from, 'Redirect to main page', 'You don\'t have product in cart')
-    } else {
-      next()
-    }
-  })
+  if (!preLogin(to)) {
+    router.goPage('/login', true, to, from, 'Redirect to auth', 'You are not auth')
+  } else if (!preForceAfterAuth(to)) {
+    router.goPage('/', true, to, from, 'Redirect to main page', 'You are auth')
+  } else if (!preShop(to)) {
+    router.goPage('/', true, to, from, 'Redirect to main page', 'You don\'t have product in cart')
+  } else {
+    next()
+  }
 })
 
 export default router
