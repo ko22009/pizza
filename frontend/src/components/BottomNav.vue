@@ -1,12 +1,12 @@
 <template>
-  <footer class="footer bg-warning mt-2">
+  <footer class="footer bg-dark mt-2 text-light">
     <div class="container">
 
       <b-navbar toggleable="lg" type="light" class="pl-0 pr-0">
 
         <router-link to="/">
           <b-navbar-brand>
-            <b-navbar-brand class="text-danger">
+            <b-navbar-brand class="text-light">
               <img src="/assets/pizza.png" class="d-inline-block align-top" style="width: 30px" alt="Pizza Hot">
               Pizza Hot
             </b-navbar-brand>
