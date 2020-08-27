@@ -1,12 +1,12 @@
 <template>
   <div>
     <b-row class="justify-content-center">
-        <pizza
-          v-for="item in pizza"
-          :key="item.id"
-          :item="item"
-          class="m-1"
-        />
+      <pizza
+        v-for="item in pizza"
+        :key="item.id"
+        :item="item"
+        class="m-1"
+      />
     </b-row>
   </div>
 </template>
@@ -27,7 +27,8 @@
     }
 
     mounted() {
-      this.$store.dispatch('pizza/get')
+      this.$store.commit('loading/setLoading', true)
+      this.$store.dispatch('pizza/get').finally(() => this.$store.commit('loading/setLoading', false))
     }
 
   }
