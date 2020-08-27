@@ -1,5 +1,5 @@
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios'
-import app from '@/main'
+import store from '@/store'
 
 export class Api {
 
@@ -24,7 +24,7 @@ export class Api {
 
       if (e.response) {
         if (e.response.status === 401)
-          app.$store.commit('auth/logout')
+          store.commit('auth/logout')
       }
 
       throw e

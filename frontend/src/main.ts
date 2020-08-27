@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
 import store from './store'
+import router from './router'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -14,6 +14,7 @@ import { Plugin } from 'vue-fragment'
 Vue.use(Plugin)
 
 import './sass/app.scss'
+import api from "@/api";
 
 Vue.config.productionTip = false
 
@@ -23,9 +24,11 @@ const root = new Vue({
   render: h => h(App)
 })
 
-if (process.env.NODE_ENV === 'development')
+if (process.env.NODE_ENV === 'development') {
+  Object.assign(root, {
+    $api: api,
+  })
   Object.assign(window, {root})
+}
 
 root.$mount('#app')
-
-export default root
