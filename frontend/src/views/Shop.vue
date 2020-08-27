@@ -7,7 +7,7 @@
     <div class="d-flex align-items-center mb-2  ">
       <span class="h2 text-danger mr-2">Your order</span>
       <span @click="clear" class="h4 cursor-pointer font-weight-light"
-            style="border-bottom: 2px dashed">(Clear cart)</span>
+            style="border-bottom: 2px dashed">(Clear order)</span>
     </div>
 
     <pizza-cart
