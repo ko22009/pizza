@@ -1,26 +1,25 @@
 <template>
-  <b-card
-    style="max-width: 20rem;"
-    class="mb-2"
-  >
-    <b-card-title class="h5">
-      {{item.name}}
-    </b-card-title>
-    <b-card-img :src="item.image" :alt="item.name" top class="mb-2"></b-card-img>
-    <b-card-text>
-      {{ item.description }}
-    </b-card-text>
-    <b-card-text class="d-flex justify-content-between font-weight-bold">
-      <span>{{ item.weight }} gr.</span>
-      <span>{{ price }}</span>
-    </b-card-text>
-    <div style="display: flex; justify-content: space-between;">
-      <quantity :count="count" @input="e => count = e" />
-      <b-avatar variant="dark" ref="floatCart" size="35" :badge="`+` + count" class="buy" badge-variant="warning"
-                icon="cart"></b-avatar>
-      <b-button :disabled="process" @click="buy(item.id, $event)" href="#" variant="danger">Buy</b-button>
-    </div>
-  </b-card>
+  <b-col cols="12" sm="6" lg="4" class="mb-4">
+    <b-card style="height: 100%">
+      <b-card-title class="h5">
+        {{item.name}}
+      </b-card-title>
+      <b-card-img :src="item.image" :alt="item.name" top class="mb-2"></b-card-img>
+      <b-card-text>
+        {{ item.description }}
+      </b-card-text>
+      <b-card-text class="d-flex justify-content-between font-weight-bold">
+        <span>{{ item.weight }} gr.</span>
+        <span>{{ price }}</span>
+      </b-card-text>
+      <div style="display: flex; justify-content: space-between;">
+        <quantity :count="count" @input="e => count = e"/>
+        <b-avatar variant="dark" ref="floatCart" size="35" :badge="`+` + count" class="buy" badge-variant="warning"
+                  icon="cart"></b-avatar>
+        <b-button :disabled="process" @click="buy(item.id, $event)" href="#" variant="danger">Buy</b-button>
+      </div>
+    </b-card>
+  </b-col>
 </template>
 
 <script lang="ts">

@@ -17,7 +17,7 @@
 
         <li class="nav-item">
           <span class="nav-link">
-            <router-link tag="span" class="cursor-pointer" to="/">
+            <router-link tag="span" class="cursor-pointer" to="/shop">
             <b-avatar id="shop" :badge="count" variant="none" badge-variant="warning" icon="cart"></b-avatar>
             </router-link>
           </span>

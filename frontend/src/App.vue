@@ -2,7 +2,7 @@
   <div id="app" class="app">
     <b-container class="flex-grow-1">
       <top-nav/>
-      <b-overlay variant="white" :show="show" no-wrap>
+      <b-overlay opacity="0.3" :show="show" no-wrap>
       </b-overlay>
       <router-view/>
     </b-container>

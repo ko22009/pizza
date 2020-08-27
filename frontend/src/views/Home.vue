@@ -1,11 +1,13 @@
 <template>
   <div>
+    <b-row v-show="!pizza.length">
+      <loading-pizza v-for="_ in 6" :count="pizza.length"/>
+    </b-row>
     <b-row class="justify-content-center">
       <pizza
         v-for="item in pizza"
         :key="item.id"
         :item="item"
-        class="m-1"
       />
     </b-row>
   </div>
@@ -14,10 +16,12 @@
 <script lang="ts">
   import {Component, Vue} from 'vue-property-decorator'
   import Pizza from '@/components/Pizza.vue'
+  import LoadingPizza from '@/components/LoadingPizza.vue'
 
   @Component({
     components: {
-      Pizza
+      Pizza,
+      LoadingPizza
     }
   })
   export default class Home extends Vue {
