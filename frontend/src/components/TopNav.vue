@@ -2,9 +2,11 @@
   <b-navbar toggleable="lg" type="light" class="mb-3 pl-0 pr-0">
 
     <router-link to="/">
-      <b-navbar-brand class="text-danger">
-        <img src="/assets/pizza.png" class="d-inline-block align-top" style="width: 30px" alt="Pizza Hot">
-        Pizza Hot
+      <b-navbar-brand>
+        <b-navbar-brand class="text-danger d-flex align-items-center">
+          <img alt="Pizza Hot" class="d-inline-block align-top mr-2" src="/assets/pizza.png" style="width: 30px">
+          Pizza Hot
+        </b-navbar-brand>
       </b-navbar-brand>
     </router-link>
 

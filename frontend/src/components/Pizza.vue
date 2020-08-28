@@ -4,7 +4,8 @@
       <b-card-title class="h5">
         {{item.name}}
       </b-card-title>
-      <b-card-img :src="item.image" :alt="item.name" top class="mb-2"></b-card-img>
+      <b-card-img :alt="item.name" :src="item.image" class="mb-2" style="max-width: 300px; margin: auto"
+                  top></b-card-img>
       <b-card-text>
         {{ item.description }}
       </b-card-text>

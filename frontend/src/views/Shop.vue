@@ -16,7 +16,7 @@
       :item="item"
     />
 
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between mt-3">
       <span class="h3 text-warning">Total order:</span>
       <span class="h3 font-weight-light price">{{totalPrice}}</span>
     </div>
@@ -41,7 +41,7 @@
 
       <b-row>
 
-        <b-col>
+        <b-col cols="12" lg="4" sm="6">
           <b-form-group
             :invalid-feedback="error('delivery.name')"
             :state="state('delivery.name')"
@@ -56,7 +56,7 @@
           </b-form-group>
         </b-col>
 
-        <b-col>
+        <b-col cols="12" lg="4" sm="6">
           <b-form-group
             :invalid-feedback="error('delivery.email')"
             :state="state('delivery.email')"
@@ -71,7 +71,7 @@
           </b-form-group>
         </b-col>
 
-        <b-col>
+        <b-col cols="12" lg="4" sm="6">
           <b-form-group
             :invalid-feedback="error('delivery.phone')"
             :state="state('delivery.phone')"

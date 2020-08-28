@@ -1,21 +1,23 @@
 <template>
-  <b-card :class="{ remove: hide, 'mb-3': true }" v-if="pizza">
-
-    <div class="d-flex align-items-center">
-      <b-card-img :src="pizza.image" alt="Image" style="max-width: 100px"></b-card-img>
+  <b-row :class="{ remove: hide, 'm-1': true }"
+         style="padding: 1rem;border: 1px solid rgba(0, 0, 0, 0.125);border-radius: 0.25rem;" v-if="pizza">
+    <b-col class="mt-2 mt-md-0 mb-3 mb-sm-3 mb-md-2 mb-lg-0 justify-content-center d-flex align-items-center" cols="12"
+           lg="2" md="4" order="2" order-sm="0" sm="4">
+      <b-card-img :src="pizza.image" alt="Image" style="max-width: 300px;"></b-card-img>
+    </b-col>
+    <b-col class="d-flex align-items-center mb-0 mb-sm-3 mb-md-2 mb-lg-0" cols="12" lg="6" order="1" sm="8">
       <span class="h3 font-weight-light">{{pizza.name}}</span>
-    </div>
+    </b-col>
 
-
-    <div class="d-flex">
-      <span class="h3 font-weight-light" style="margin-left: 10px;">{{price}}</span>
-      <quantity :count="item.count" @input="input" style="margin-left: 30px;" v-if="!hide"/>
-      <b-button @click="remove(item.id)" class="ml-3" v-if="!hide" variant="outline-dark">
+    <b-col class="justify-content-around d-flex align-items-center" cols="12" lg="4" order="4">
+      <span class="h3 font-weight-light" v-if="hide">{{item.count}} pcs.</span>
+      <span class="h3 font-weight-light">{{price}}</span>
+      <quantity :count="item.count" @input="input" v-if="!hide"/>
+      <b-button @click="remove(item.id)" v-if="!hide" variant="outline-dark">
         <b-icon icon="dash-square"></b-icon>
       </b-button>
-    </div>
-
-  </b-card>
+    </b-col>
+  </b-row>
 </template>
 
 <script lang="ts">
@@ -71,8 +73,8 @@
   }
 
   .remove {
-    border: none;
-    margin-right: auto;
+    width: 100%;
+    border: none !important;
 
     .card-body {
       padding: 0;
