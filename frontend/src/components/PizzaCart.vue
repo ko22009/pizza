@@ -9,13 +9,16 @@
       <span class="h3 font-weight-light">{{pizza.name}}</span>
     </b-col>
 
-    <b-col class="justify-content-around d-flex align-items-center" cols="12" lg="4" order="4">
+    <b-col class="justify-content-center justify-content-sm-end d-flex align-items-center flex-wrap" cols="12" lg="4"
+           order="4">
       <span class="h3 font-weight-light" v-if="hide">{{item.count}} pcs.</span>
-      <span class="h3 font-weight-light">{{price}}</span>
-      <quantity :count="item.count" @input="input" v-if="!hide"/>
-      <b-button @click="remove(item.id)" v-if="!hide" variant="outline-dark">
-        <b-icon icon="dash-square"></b-icon>
-      </b-button>
+      <span class="h3 font-weight-light" style="min-width: 100px;text-align: center; padding: 10px;">{{price}}</span>
+      <div class="d-flex">
+        <quantity :count="item.count" @input="input" class="mr-2" v-if="!hide"/>
+        <b-button @click="remove(item.id)" v-if="!hide" variant="outline-dark">
+          <b-icon icon="dash-square"></b-icon>
+        </b-button>
+      </div>
     </b-col>
   </b-row>
 </template>
