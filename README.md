@@ -1,23 +1,29 @@
 #### Laravel API + SPA vue, vuex, router, axios ####
+
+For testing:
+login: user
+password: user
+
 * Laravel v.7.0
 * Laravel Passport v.9.3
 * Vue v.2.6.11
 * Vuex v.3.5.1
 
-**Развертывание**
+**Deploting**
 1. composer install
-2. php artisan serve
-2. cd frontend & yarn
-3. yarn serve
+2. php artisan migration --seed
+3. php artisan passport:install
+4. php artisan serve
+5. cd frontend & yarn
+6. yarn serve
 
-Если будет отличаться адрес на dev, то поменять
-frontend/.env.develop
+If you need change backend ip, go to frontend/.env.develop
 
-Собирать frontend с папки frontend.  
-Автоматически кладет куда нужно.
+Build frontend from folder frontend.  
+Automatic move files to public folder.
 
-Для dev: yarn serve,  
-для prod: yarn build
+For dev: yarn serve,
+For prod: yarn build
 
-`Документация`:
+`Documentation`:
 api/documentation
