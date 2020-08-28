@@ -27,8 +27,8 @@
 
     <b-form @submit.stop.prevent="">
       <b-form-group
-        :state="state('address')"
-        :invalid-feedback="error('address')"
+        :invalid-feedback="error('delivery.address')"
+        :state="state('delivery.address')"
         label="Your address:"
         label-for="address"
       >
@@ -43,8 +43,8 @@
 
         <b-col>
           <b-form-group
-            :state="state('name')"
-            :invalid-feedback="error('name')"
+            :invalid-feedback="error('delivery.name')"
+            :state="state('delivery.name')"
             label="Your name:"
             label-for="name"
           >
@@ -58,8 +58,8 @@
 
         <b-col>
           <b-form-group
-            :state="state('email')"
-            :invalid-feedback="error('email')"
+            :invalid-feedback="error('delivery.email')"
+            :state="state('delivery.email')"
             label="Your email:"
             label-for="email"
           >
@@ -73,8 +73,8 @@
 
         <b-col>
           <b-form-group
-            :state="state('phone')"
-            :invalid-feedback="error('phone')"
+            :invalid-feedback="error('delivery.phone')"
+            :state="state('delivery.phone')"
             label="Your phone:"
             label-for="phone"
           >
@@ -101,7 +101,7 @@
     </div>
 
     <div class="text-center mt-2 mb-3">
-      <b-button squared variant="outline-danger" size="lg">Make order</b-button>
+      <b-button :disabled="process" @click="make" size="lg" squared variant="outline-danger">Make order</b-button>
     </div>
 
   </div>
@@ -110,13 +110,13 @@
 <script lang="ts">
   import {Component, Vue, Watch} from 'vue-property-decorator'
   import PizzaCart from '@/components/PizzaCart.vue'
-  import {euro, Order} from "@/store/modules/shop";
-  import {ItemPizza} from "@/store/modules/pizza";
+  import {euro} from '@/store/modules/shop'
+  import {ItemPizza} from '@/store/modules/pizza'
 
   @Component({
     components: {
       PizzaCart,
-    }
+    },
   })
   export default class Shop extends Vue {
 
@@ -124,8 +124,9 @@
       address: '',
       name: '',
       email: '',
-      phone: ''
+      phone: '',
     }
+    process = false
 
     errors: { [key: string]: Array<string> } = {}
 
@@ -141,16 +142,35 @@
     }
 
     get pizzaOrder() {
-      let merged = [];
-      if(!this.pizza.length) return []
+      let merged = []
+      if (!this.pizza.length) return []
       for (let i = 0; i < this.items.length; i++) {
         merged.push({
             ...this.items[i],
-            ...(this.pizza.find((item: ItemPizza) => this.items[i].id === item.id))
-          }
+            ...(this.pizza.find((item: ItemPizza) => this.items[i].id === item.id)),
+          },
         )
       }
       return merged
+    }
+
+    make() {
+      this.process = true
+      this.$store.dispatch('shop/make', {delivery: this.form, items: this.items})
+        .then(() => {
+          this.redirect()
+          this.$nextTick(() => this.$bvToast.toast('Waiting your order.', {
+            title: 'Thanks for order!',
+            variant: 'success',
+            autoHideDelay: 1500,
+            solid: true,
+            appendToast: true,
+          }))
+        })
+        .catch(err => {
+          this.process = false
+          this.errors = err.response.data.errors
+        })
     }
 
     get currency() {
@@ -185,7 +205,7 @@
 
     @Watch('count')
     updateCount(val: number) {
-      if (!val) this.$bvToast.show('cart-toast')
+      if (!val && !this.process) this.$bvToast.show('cart-toast')
     }
 
     clear() {
@@ -194,7 +214,8 @@
     }
 
     redirect() {
-      this.$router.push('/')
+      this.$router.push('/').catch((_) => {
+      })
     }
 
     get pizza() {

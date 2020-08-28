@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Pizza;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,7 +14,7 @@ class CreatePizzasTable extends Migration
      */
     public function up()
     {
-        Schema::create('pizzas', function (Blueprint $table) {
+        Schema::create(with(new Pizza())->getTable(), function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->text('description');
@@ -32,6 +33,6 @@ class CreatePizzasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pizzas');
+        Schema::dropIfExists(with(new Pizza())->getTable());
     }
 }

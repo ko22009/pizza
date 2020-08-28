@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: finatoros
- * Date: 15.01.19
- * Time: 11:15
- */
 
 namespace App\Services\Contracts;
-
 
 use Illuminate\Http\Request;
 

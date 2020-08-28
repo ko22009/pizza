@@ -2,15 +2,16 @@
 
 namespace App\Providers;
 
-use App\Pizza;
+use App\Models\Order;
+use App\Models\Pizza;
+use App\Models\User;
+use App\Repositories\OrderRepository;
 use App\Repositories\PizzaRepository;
 use App\Repositories\UserRepository;
-use App\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
-class RepositoryServiceProvider extends ServiceProvider
-{
+class RepositoryServiceProvider extends ServiceProvider {
     /**
      * Bootstrap services.
      *
@@ -36,6 +37,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->singleton('App\Repositories\PizzaRepository', function (Application $app) {
             return new PizzaRepository(
                 $app->make(Pizza::class)
+            );
+        });
+        $this->app->singleton('App\Repositories\OrderRepository', function (Application $app) {
+            return new OrderRepository(
+                $app->make(Order::class)
             );
         });
     }

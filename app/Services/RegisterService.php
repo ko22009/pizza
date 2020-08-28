@@ -2,11 +2,8 @@
 
 namespace App\Services;
 
-
 use App\Http\Entities\RegistrationResponseEntity;
-use App\Http\Requests\RegistrationRequest;
 use App\Repositories\Contracts\RepositoryInterface;
-use App\Services\Contracts\JWTServiceInterface;
 use App\Services\Contracts\RegistrationServiceInterface;
 use Illuminate\Support\Facades\Hash;
 

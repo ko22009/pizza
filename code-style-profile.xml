@@ -1,0 +1,41 @@
+<code_scheme name="Code style" version="1">
+    <option name="LINE_SEPARATOR" value="&#xA;"/>
+    <option name="HTML_DO_NOT_INDENT_CHILDREN_OF" value=""/>
+    <HTMLCodeStyleSettings>
+        <option name="HTML_DO_NOT_INDENT_CHILDREN_OF" value=""/>
+    </HTMLCodeStyleSettings>
+    <JSCodeStyleSettings version="0">
+        <option name="USE_SEMICOLON_AFTER_STATEMENT" value="false"/>
+        <option name="FORCE_SEMICOLON_STYLE" value="true"/>
+        <option name="USE_DOUBLE_QUOTES" value="false"/>
+        <option name="FORCE_QUOTE_STYlE" value="true"/>
+        <option name="ENFORCE_TRAILING_COMMA" value="WhenMultiline"/>
+        <option name="IMPORTS_WRAP" value="1"/>
+    </JSCodeStyleSettings>
+    <PHPCodeStyleSettings>
+        <option name="ALIGN_KEY_VALUE_PAIRS" value="true"/>
+        <option name="COMMA_AFTER_LAST_ARRAY_ELEMENT" value="true"/>
+        <option name="LOWER_CASE_BOOLEAN_CONST" value="true"/>
+        <option name="LOWER_CASE_NULL_CONST" value="true"/>
+        <option name="FORCE_SHORT_DECLARATION_ARRAY_STYLE" value="true"/>
+    </PHPCodeStyleSettings>
+    <TypeScriptCodeStyleSettings version="0">
+        <option name="USE_SEMICOLON_AFTER_STATEMENT" value="false"/>
+        <option name="FORCE_SEMICOLON_STYLE" value="true"/>
+        <option name="USE_DOUBLE_QUOTES" value="false"/>
+        <option name="FORCE_QUOTE_STYlE" value="true"/>
+        <option name="ENFORCE_TRAILING_COMMA" value="WhenMultiline"/>
+    </TypeScriptCodeStyleSettings>
+    <codeStyleSettings language="JavaScript">
+        <option name="WRAP_ON_TYPING" value="0"/>
+    </codeStyleSettings>
+    <codeStyleSettings language="PHP">
+        <option name="CLASS_BRACE_STYLE" value="1"/>
+        <option name="METHOD_BRACE_STYLE" value="1"/>
+        <option name="ALIGN_MULTILINE_ARRAY_INITIALIZER_EXPRESSION" value="true"/>
+        <option name="ARRAY_INITIALIZER_WRAP" value="1"/>
+        <option name="ARRAY_INITIALIZER_LBRACE_ON_NEXT_LINE" value="true"/>
+        <option name="ARRAY_INITIALIZER_RBRACE_ON_NEXT_LINE" value="true"/>
+        <option name="ASSIGNMENT_WRAP" value="1"/>
+    </codeStyleSettings>
+</code_scheme>

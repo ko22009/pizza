@@ -23,22 +23,23 @@
 </template>
 
 <script lang="ts">
-  import {Component, Prop, Ref, Vue} from "vue-property-decorator";
+  import {Component, Prop, Ref, Vue} from 'vue-property-decorator'
   import {ItemPizza} from '@/store/modules/pizza'
-  import Quantity from "@/components/Quantity.vue";
-  import $ from 'jquery';
-  import {euro} from "@/store/modules/shop";
+  import Quantity from '@/components/Quantity.vue'
+  import $ from 'jquery'
+  import {euro, Order} from '@/store/modules/shop'
 
   @Component({
     components: {
-      Quantity
-    }
+      Quantity,
+    },
   })
   export default class Pizza extends Vue {
     @Prop() item!: ItemPizza
     @Ref('floatCart') floatCartEl!: Vue
     count = 1
     process = false
+    product: Order | null = null
 
     get price() {
       const currency = this.$store.getters['shop/currency']
@@ -52,7 +53,7 @@
       const shop = $('#shop')
       const goX = shop.offset()?.left
       const goY = shop.offset()?.top
-      const product = {id: id, count: this.count}
+      this.product = {id: id, count: this.count}
       this.floatCartEl.$el.setAttribute('style', `display:flex; left: ${x}px; top: ${y}px`)
       this.process = true
       $(this.floatCartEl.$el).animate({
@@ -62,12 +63,21 @@
         1500,
         () => {
           this.floatCartEl.$el.setAttribute('style', `display:none`)
-          this.$store.commit('shop/add', product)
           this.count = 1
           this.process = false
-        }
+          this.$store.commit('shop/add', this.product)
+          this.product = null
+        },
       )
     }
+
+    beforeDestroy() {
+      if (this.product) {
+        this.$store.commit('shop/add', this.product)
+        $(this.floatCartEl.$el).stop(true)
+      }
+    }
+
   }
 </script>
 

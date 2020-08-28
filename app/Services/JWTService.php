@@ -1,13 +1,11 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Services\Contracts\JWTServiceInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Route;
 
 class JWTService implements JWTServiceInterface
 {

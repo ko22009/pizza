@@ -1,6 +1,7 @@
 import {Module} from 'vuex'
 import {RootState} from '@/store'
-import {Vue} from "vue-property-decorator";
+import {Vue} from 'vue-property-decorator'
+import api from '@/api'
 
 export const euro = '€'
 export const dollar = '$'
@@ -30,20 +31,20 @@ export default <Module<ShopState, RootState>>{
     currency: state => state.currency
   },
   mutations: {
-    add(state, {id, count}) {
-      const index = state.order.findIndex(item => item.id == id)
-      if(index == -1) {
+    add(state, payload) {
+      const index = state.order.findIndex(item => item.id == payload.id)
+      if (index == -1) {
         state.order.push({
-          id: id,
-          count: count
+          id: payload.id,
+          count: payload.count,
         })
       } else {
-        Vue.set(state.order[index], 'count', state.order[index].count + count)
+        Vue.set(state.order[index], 'count', state.order[index].count + payload.count)
       }
     },
     updateCount(state, {id, count}) {
       const index = state.order.findIndex(item => item.id == id)
-      if(index != -1) {
+      if (index != -1) {
         Vue.set(state.order[index], 'count', count)
       }
     },
@@ -51,11 +52,24 @@ export default <Module<ShopState, RootState>>{
       Vue.set(state, 'order', state.order.filter(item => item.id != id))
     },
     clear(state) {
-      Vue.set(state, 'order', []);
+      Vue.set(state, 'order', [])
     },
     changeCurrency(state) {
       state.currency = state.currency === euro ? dollar : euro
-    }
+    },
   },
-  actions: {},
+  actions: {
+    make({commit}, order) {
+      return new Promise((resolve, reject) => {
+        api.post('order/make', order)
+          .then(resp => {
+            resolve(resp)
+            commit('clear')
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
+    },
+  },
 }

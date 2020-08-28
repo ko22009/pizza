@@ -2,9 +2,8 @@
 
 namespace App\Repositories;
 
-
+use App\Models\User;
 use App\Repositories\Contracts\AbstractRepository;
-use App\User;
 
 class UserRepository extends AbstractRepository
 {

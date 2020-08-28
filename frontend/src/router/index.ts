@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import Router, {RouteConfig} from 'vue-router'
 import Home from '@/views/Home.vue'
-import Login from "@/views/Login.vue"
+import Login from '@/views/Login.vue'
 import Register from '@/views/Register.vue'
-import Profile from "@/views/Profile.vue"
-import PageNotFound from "@/views/PageNotFound.vue"
-import Shop from "@/views/Shop.vue"
-import AfterAuthHandler from "@/router/handlers/afterAuthHandler"
-import BeforeAuthHandler from "@/router/handlers/beforeAuthHandler"
-import EndHandler from "@/router/handlers/endHandler"
-import BeforeShopHandler from "@/router/handlers/beforeShopHandler"
+import Profile from '@/views/Profile.vue'
+import PageNotFound from '@/views/PageNotFound.vue'
+import Shop from '@/views/Shop.vue'
+import AfterAuthHandler from '@/router/handlers/afterAuthHandler'
+import BeforeAuthHandler from '@/router/handlers/beforeAuthHandler'
+import EndHandler from '@/router/handlers/endHandler'
+import BeforeShopHandler from '@/router/handlers/beforeShopHandler'
 
 const title = 'Pizza Hot'
 
@@ -19,7 +19,7 @@ const routes: Array<RouteConfig> = [
     name: 'Home',
     component: Home,
     meta: {
-      title: title
+      title: title,
     }
   },
   {
@@ -84,9 +84,10 @@ function toaster(url: string, message: string, title: string) {
   router.app.$nextTick(() => router.app.$bvToast.toast(message, {
     title: title,
     variant: 'dark',
-    solid: true
+    solid: true,
   }))
-  router.push(url).catch()
+  router.push(url).catch((_) => {
+  })
 }
 
 router.beforeEach((to, from, next) => {

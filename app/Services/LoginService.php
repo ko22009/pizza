@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Http\Entities\LoginResponseEntity;
 use App\Services\Contracts\AuthenticationServiceInterface;
 
-
 /**
  * Class LoginService
  * @package App\Services

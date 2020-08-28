@@ -1,9 +1,6 @@
 <?php
 
-
 namespace App\Services\Contracts;
-
-
 
 use App\Http\Entities\LoggedUserResponseEntity;
 

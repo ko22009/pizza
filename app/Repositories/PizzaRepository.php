@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Pizza;
+use App\Models\Pizza;
 use App\Repositories\Contracts\AbstractRepository;
 
 class PizzaRepository extends AbstractRepository

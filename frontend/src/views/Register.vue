@@ -74,7 +74,7 @@
 
 <script lang="ts">
 
-  import {Vue, Component} from "vue-property-decorator";
+  import {Component, Vue} from 'vue-property-decorator'
 
   @Component
   export default class Register extends Vue {
@@ -102,7 +102,8 @@
 
     register() {
       this.$store.dispatch('auth/register', this.form)
-        .then(() => this.$router.push('/').catch())
+        .then(() => this.$router.push('/').catch((_) => {
+        }))
         .catch(err => {
           this.errors = err.errors
           this.commonError = err.error

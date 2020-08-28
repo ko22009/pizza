@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Http\Entities\LoggedUserResponseEntity;
 use App\Repositories\UserRepository;
