@@ -5,7 +5,7 @@
         <b-btn variant="warning" @click="decrement()">-</b-btn>
       </b-input-group-prepend>
 
-      <b-input-group-text class="bg-dark text-light">
+      <b-input-group-text class="bg-dark text-light" style="min-width: 44px;display: flex;justify-content: center;">
         {{count}}
       </b-input-group-text>
 
