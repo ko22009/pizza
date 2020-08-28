@@ -9,7 +9,7 @@ password: user
 * Vue v.2.6.11
 * Vuex v.3.5.1
 
-**Deploting**
+**Deploying**
 1. composer install
 2. php artisan migrate:fresh --seed
 3. php artisan passport:install
