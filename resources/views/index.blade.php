@@ -7,17 +7,17 @@
         <link rel=icon href=/favicon.ico>
         <title>Pizza Hot</title>
         <link href=/css/chunk-vendors.ddab4820.css rel=preload as=style>
-        <link href=/css/index.e415157f.css rel=preload as=style>
+        <link href=/css/index.998d2780.css rel=preload as=style>
         <link href=/js/chunk-vendors.a94320bd.js rel=preload as=script>
-        <link href=/js/index.d369839f.js rel=preload as=script>
+        <link href=/js/index.2a369d84.js rel=preload as=script>
         <link href=/css/chunk-vendors.ddab4820.css rel=stylesheet>
-        <link href=/css/index.e415157f.css rel=stylesheet>
+        <link href=/css/index.998d2780.css rel=stylesheet>
     </head>
     <body>
         <noscript><strong>We're sorry but Pizza Hot doesn't work properly without JavaScript enabled. Please enable it
                 to continue.</strong></noscript>
         <div id=app></div>
         <script src=/js/chunk-vendors.a94320bd.js></script>
-        <script src=/js/index.d369839f.js></script>
+        <script src=/js/index.2a369d84.js></script>
     </body>
 </html>
