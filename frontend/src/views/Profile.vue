@@ -72,8 +72,9 @@
     }
 
     mounted() {
+      this.$store.commit('loading/setLoading', true)
       if (!this.pizza.length) this.loadPizza()
-      this.$store.dispatch('auth/orders')
+      this.$store.dispatch('auth/orders').finally(() => this.$store.commit('loading/setLoading', false))
     }
   }
 
