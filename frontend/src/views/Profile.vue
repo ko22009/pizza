@@ -3,6 +3,9 @@
     <div class="d-flex align-items-center mb-2">
       <span class="h2 text-danger mr-2">Your history of orders</span>
     </div>
+    <div v-if="!orders.length">
+      <span class="h3 text-dark mr-2">History is empty</span>
+    </div>
     <div class="orders">
       <div v-for="(order, i) in orders">
         <div class="h3 border-top pt-2 header">
