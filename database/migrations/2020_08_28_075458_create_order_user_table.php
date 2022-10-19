@@ -15,18 +15,8 @@ class CreateOrderUserTable extends Migration {
      */
     public function up() {
         Schema::create(with(new OrderUser())->getTable(), function (Blueprint $table) {
-            $table->integer('order_id');
-            $table->integer('user_id');
-
-            $table->foreign('order_id')
-                ->references('id')
-                ->on(with(new Order())->getTable())
-                ->onDelete('cascade');
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on(with(new User())->getTable())
-                ->onDelete('cascade');
+            $table->foreignId('order_id')->constrained();
+            $table->foreignId('user_id')->constrained();
         });
     }
 

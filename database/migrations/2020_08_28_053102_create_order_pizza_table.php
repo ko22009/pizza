@@ -11,19 +11,9 @@ class CreateOrderPizzaTable extends Migration {
 
     public function up() {
         Schema::create(with(new OrderPizza())->getTable(), function (Blueprint $table) {
-            $table->integer('order_id');
-            $table->integer('pizza_id');
+            $table->foreignId('order_id')->constrained();
+            $table->foreignId('pizza_id')->constrained();
             $table->integer('count');
-
-            $table->foreign('order_id')
-                ->references('id')
-                ->on(with(new Order())->getTable())
-                ->onDelete('cascade');
-
-            $table->foreign('pizza_id')
-                ->references('id')
-                ->on(with(new Pizza())->getTable())
-                ->onDelete('cascade');
         });
     }
 
